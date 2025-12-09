@@ -26,7 +26,7 @@ get_header();
             <!-- Content -->
             <div class="w-full lg:w-[50%] lg:pr-[40px] mb-[50px] lg:mb-0 text-center lg:text-left">
                 <!-- Badge -->
-                <div class="inline-block w-full bg-[#3D8BFF]/50 rounded-[5px] px-[26px] py-[6px] mb-[20px] lg:mb-[30px]">
+                <div class="inline-block md:w-auto w-full bg-[#3D8BFF]/50 rounded-[5px] px-[26px] py-[6px] mb-[20px] lg:mb-[30px]">
                     <span class="text-white lg:text-[#233B5D] text-[13px] lg:text-[15px] font-[300] lg:font-[300] leading-none">
                         Профессиональные электромонтажные работы
                     </span>
