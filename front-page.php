@@ -377,77 +377,276 @@ get_header();
     <div class="max-w-[1200px] mx-auto px-[15px]">
         
         <!-- Header -->
-        <div class="flex flex-col lg:flex-row justify-between items-center mb-[50px] gap-[20px]">
-            <div class="flex-1"></div>
-            <div class="text-center">
-                <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[10px]">Реализованные проекты</h2>
-                <p class="text-[#555] text-[16px] lg:text-[18px] font-[300]">Примеры наших работ</p>
+        <div class="text-center mb-[50px]">
+            <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[15px]">Реализованные проекты</h2>
+            <p class="text-[#6D6F73] text-[16px] lg:text-[18px] font-[300] max-w-[800px] mx-auto">Примеры наших работ</p>
+        </div>
+
+        <!-- Projects Carousel/Grid Container -->
+        <div class="relative">
+            <!-- Projects Grid/Slider -->
+            <div id="projects-slider" class="flex overflow-x-auto snap-x snap-mandatory lg:grid lg:grid-cols-4 gap-[20px] lg:gap-[25px] scroll-smooth no-scrollbar pb-[10px] lg:pb-0">
+            
+                <?php
+                // Query to get latest 4 projects
+                $projects_query = new WP_Query(array(
+                    'post_type' => 'project',
+                    'posts_per_page' => 4,
+                    'orderby' => 'date',
+                    'order' => 'DESC'
+                ));
+
+                if ($projects_query->have_posts()) :
+                    while ($projects_query->have_posts()) : $projects_query->the_post();
+                        
+                        // Get ACF fields
+                        $project_name = get_field('project_name');
+                        $project_category = get_field('project_category');
+                        $project_work_type = get_field('project_work_type');
+                        $project_image_1 = get_field('project_image_1');
+                        
+                        // Use first image or fallback
+                        $image_url = $project_image_1 ? $project_image_1['url'] : get_template_directory_uri() . '/assets/image.png';
+                        $image_alt = $project_image_1 ? $project_image_1['alt'] : $project_name;
+                ?>
+                
+                <!-- Project Card -->
+                <div class="min-w-full lg:min-w-0 snap-center group cursor-pointer">
+                    <div class="relative h-[180px] lg:h-[200px] overflow-hidden rounded-[30px] mb-[20px]">
+                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        
+                        <?php if ($project_category): ?>
+                        <!-- Mobile: Badge on image top-left -->
+                        <div class="lg:hidden absolute top-[20px] left-[20px] bg-white text-[#3D8BFF] text-[14px] font-[500] px-[20px] py-[10px] rounded-[30px] shadow-md">
+                            <?php echo esc_html($project_category); ?>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <?php if ($project_category): ?>
+                    <!-- Desktop: Badge below image -->
+                    <div class="hidden lg:flex justify-center mb-[15px]">
+                        <div class="inline-block bg-white text-[#36A3DA] text-[15px] font-[300] px-[20px] py-[6px] rounded-[30px] shadow-md lg:mr-auto">
+                            <?php echo esc_html($project_category); ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    
+                    <h3 class="text-[#2A2A2A] text-[18px] lg:text-[24px] font-[400] leading-[1.3] text-left">
+                        <?php echo esc_html($project_work_type ? $project_work_type : $project_name); ?>
+                    </h3>
+                </div>
+
+                <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else:
+                ?>
+                
+                <!-- No Projects Message -->
+                <div class="col-span-full text-center py-[40px]">
+                    <p class="text-[#555] text-[16px]">Проекты пока не добавлены</p>
+                </div>
+                
+                <?php endif; ?>
+
             </div>
-            <div class="flex-1 flex justify-end">
-                <a href="/portfolio" class="inline-flex items-center text-[#2A2A2A] hover:text-[#3D8BFF] font-[500] text-[16px] lg:text-[18px] transition-colors gap-[10px] group">
+
+            <!-- Navigation Arrows (Mobile Only) -->
+            <div class="flex lg:hidden justify-center gap-[20px] mt-[30px] mb-[30px]">
+                <button id="projects-prev" class="w-[60px] h-[60px] bg-white hover:bg-[#e1e4e8] rounded-[8px] flex items-center justify-center transition-colors shadow-md">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow.svg" class="w-[24px] h-[24px] rotate-180">
+                </button>
+                <button id="projects-next" class="w-[60px] h-[60px] bg-white hover:bg-[#e1e4e8] rounded-[8px] flex items-center justify-center transition-colors shadow-md">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow.svg" class="w-[24px] h-[24px]">
+                </button>
+            </div>
+
+            <!-- All Projects Button (Mobile Only) -->
+            <div class="lg:hidden flex justify-center">
+                <a href="/portfolio" class="block w-full max-w-[400px] text-center border-2 border-[#2A2A2A] text-[#2A2A2A] text-[16px] font-[600] py-[16px] px-[32px] rounded-[8px] hover:bg-[#2A2A2A] hover:text-white transition-colors duration-300 no-underline">
+                    Все услуги
+                </a>
+            </div>
+
+            <!-- All Projects Link (Desktop Only) -->
+            <div class="hidden lg:flex absolute top-[-200px] right-[0px] justify-center mt-[40px]">
+                <a href="/portfolio" class="inline-flex items-center text-[#2A2A2A] hover:text-[#3D8BFF] font-[500] text-[18px] transition-colors gap-[10px] group">
                     <span class="border-b border-[#2A2A2A] group-hover:border-[#3D8BFF] transition-colors">Все проекты</span>
-                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow-down.svg" class="w-[20px] h-[20px]">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow-down.svg" class="w-[42px]">
                 </a>
             </div>
         </div>
 
-        <!-- Projects Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[20px] lg:gap-[25px]">
-            
-            <?php
-            // Query to get latest 4 projects
-            $projects_query = new WP_Query(array(
-                'post_type' => 'project',
-                'posts_per_page' => 4,
-                'orderby' => 'date',
-                'order' => 'DESC'
-            ));
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const slider = document.getElementById('projects-slider');
+                const prevBtn = document.getElementById('projects-prev');
+                const nextBtn = document.getElementById('projects-next');
 
-            if ($projects_query->have_posts()) :
-                while ($projects_query->have_posts()) : $projects_query->the_post();
-                    
-                    // Get ACF fields
-                    $project_name = get_field('project_name');
-                    $project_category = get_field('project_category');
-                    $project_work_type = get_field('project_work_type');
-                    $project_image_1 = get_field('project_image_1');
-                    
-                    // Use first image or fallback
-                    $image_url = $project_image_1 ? $project_image_1['url'] : get_template_directory_uri() . '/assets/image.png';
-                    $image_alt = $project_image_1 ? $project_image_1['alt'] : $project_name;
-            ?>
+                if (slider && prevBtn && nextBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        slider.scrollBy({ left: -slider.offsetWidth, behavior: 'smooth' });
+                    });
+
+                    nextBtn.addEventListener('click', () => {
+                        slider.scrollBy({ left: slider.offsetWidth, behavior: 'smooth' });
+                    });
+                }
+            });
+        </script>
+    </div>
+</section>
+
+<!--Sertificates Projects Section -->
+<section class="py-[80px] lg:py-[100px]">
+    <div class="max-w-[1200px] mx-auto px-[15px]">
+        
+        <!-- Header -->
+        <div class="text-center mb-[50px]">
+            <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[15px]">Сертификаты и лицензии</h2>
+            <p class="text-[#6D6F73] text-[16px] lg:text-[18px] font-[300] max-w-[800px] mx-auto">Все необходимые разрешительные документы для выполнения работ</p>
+        </div>
+
+        <!-- Certificates Container -->
+        <div class="relative">
+            <!-- Certificates Slider/Grid -->
+            <div id="certificates-slider" class="flex overflow-x-auto snap-x snap-mandatory lg:flex lg:flex-row gap-[20px] scroll-smooth no-scrollbar pb-[10px] lg:pb-0">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/s1.png" alt="certificate" class="min-w-full lg:min-w-0 snap-center flex-1 rounded-[12px]">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/s2.png" alt="certificate" class="min-w-full lg:min-w-0 snap-center flex-1 rounded-[12px]">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/s3.png" alt="certificate" class="min-w-full lg:min-w-0 snap-center flex-1 rounded-[12px]">
+            </div>
+
+            <!-- Navigation Arrows (Mobile Only) -->
+            <div class="flex lg:hidden justify-center gap-[20px] mt-[30px]">
+                <button id="certificates-prev" class="w-[60px] h-[60px] bg-white hover:bg-[#e1e4e8] rounded-[8px] flex items-center justify-center transition-colors shadow-md">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow.svg" class="w-[24px] h-[24px] rotate-180">
+                </button>
+                <button id="certificates-next" class="w-[60px] h-[60px] bg-white hover:bg-[#e1e4e8] rounded-[8px] flex items-center justify-center transition-colors shadow-md">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/arrow.svg" class="w-[24px] h-[24px]">
+                </button>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const slider = document.getElementById('certificates-slider');
+                const prevBtn = document.getElementById('certificates-prev');
+                const nextBtn = document.getElementById('certificates-next');
+
+                if (slider && prevBtn && nextBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        slider.scrollBy({ left: -slider.offsetWidth, behavior: 'smooth' });
+                    });
+
+                    nextBtn.addEventListener('click', () => {
+                        slider.scrollBy({ left: slider.offsetWidth, behavior: 'smooth' });
+                    });
+                }
+            });
+        </script>
+    </div>
+</section>
+
+<!-- Review Form Section -->
+<section class="py-[80px] lg:py-[100px] bg-[#BAD5FF]">
+    <div class="max-w-[1200px] mx-auto px-[15px]">
+        
+        <!-- Header -->
+        <div class="text-center mb-[50px]">
+            <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[15px]">Оставьте отзыв о нашей работе</h2>
+            <p class="text-[#6D6F73] text-[16px] lg:text-[18px] font-[300] mx-auto">
+                Ваше мнение помогает нам становиться лучше. Отзыв появится на сайте после проверки администратором.
+            </p>
+        </div>
+
+        <!-- Form and Image Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[60px] items-center">
             
-            <!-- Project Card -->
-            <div class="group cursor-pointer">
-                <div class="relative h-[180px] lg:h-[200px] overflow-hidden rounded-[24px] mb-[20px]">
-                    <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($image_alt); ?>" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                </div>
-                
-                <?php if ($project_category): ?>
-                <div class="flex justify-center mb-[15px]">
-                    <div class="inline-block bg-white text-[#36A3DA] text-[13px] lg:text-[15px] font-[300] px-[20px] py-[6px] rounded-[30px] shadow-md mr-auto">
-                        <?php echo esc_html($project_category); ?>
+            <!-- Form Column -->
+            <div>
+                <form id="review-form" class="space-y-[20px]">
+                    
+                    <!-- Name Input -->
+                    <div>
+                        <label for="review-name" class="text-[#6D6F73] text-[15px] font-[300]">Ваше имя</label>
+                        <input 
+                            type="text" 
+                            id="review-name" 
+                            name="name" 
+                            required
+                            class="w-full mt-[10px] px-[20px] py-[14px] bg-white border-0 rounded-[8px] text-[#2A2A2A] text-[16px] focus:outline-none focus:ring-2 focus:ring-[#3D8BFF]"
+                        >
                     </div>
-                </div>
-                <?php endif; ?>
-                
-                <h3 class="text-[#2A2A2A] text-[20px] lg:text-[24px] font-[400] leading-[1.3] text-left">
-                    <?php echo esc_html($project_work_type ? $project_work_type : $project_name); ?>
-                </h3>
+
+                    <!-- Phone Input -->
+                    <div>
+                        <label for="review-phone" class="text-[#6D6F73] text-[15px] font-[300] mb-[10px]">Телефон (не публикуется)</label>
+                        <input 
+                            type="tel" 
+                            id="review-phone" 
+                            name="phone" 
+                            placeholder="Нужен только для подтверждения"
+                            class="w-full mt-[10px] px-[20px] py-[14px] bg-white border-0 rounded-[8px] text-[#2A2A2A] text-[16px] placeholder:text-[#999] focus:outline-none focus:ring-2 focus:ring-[#3D8BFF]"
+                        >
+                    </div>
+
+                    <!-- Review Text -->
+                    <div>
+                        <label for="review-text" class="text-[#6D6F73] text-[15px] font-[300] mb-[10px]">Текст отзыва</label>
+                        <textarea 
+                            id="review-text" 
+                            name="review" 
+                            rows="5"
+                            required
+                            class="w-full mt-[10px] px-[20px] py-[14px] bg-white border-0 rounded-[8px] text-[#2A2A2A] text-[16px] resize-none focus:outline-none focus:ring-2 focus:ring-[#3D8BFF]"
+                        ></textarea>
+                    </div>
+
+                    <!-- Photo Upload -->
+                    <div>
+                        <label class="flex items-center gap-[10px] cursor-pointer text-[#555] text-[14px]">
+                            <div class="flex px-[15px] py-[16px] bg-white rounded-[8px] cursor-pointer">
+															<svg class="w-[20px] mr-[10px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+																	<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+															</svg>
+															<span>Прикрепить фото</span>
+														</div>
+                            <span class="text-[#999]">*не обязательно</span>
+                            <input type="file" name="photo" accept="image/*" class="hidden">
+                        </label>
+                    </div>
+
+                    <!-- Privacy Checkbox -->
+                    <div class="flex items-center gap-[10px]">
+                        <input 
+                            type="checkbox" 
+                            id="privacy-consent" 
+                            name="privacy" 
+                            required
+                            class="w-[18px] h-[18px] rounded border-2 border-[#3D8BFF] text-[#3D8BFF] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        >
+                        <label for="privacy-consent" class="text-[#2A2A2A] text-[14px] cursor-pointer">
+                            Я согласен на обработку персональных данных
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit"
+                        class="w-full bg-[#2A2A2A] hover:bg-[#3D8BFF] text-white text-[16px] font-[600] py-[16px] px-[32px] rounded-[8px] transition-colors duration-300"
+                    >
+                        Отправить отзыв
+                    </button>
+
+                </form>
             </div>
 
-            <?php
-                endwhile;
-                wp_reset_postdata();
-            else:
-            ?>
-            
-            <!-- No Projects Message -->
-            <div class="col-span-full text-center py-[40px]">
-                <p class="text-[#555] text-[16px]">Проекты пока не добавлены</p>
+            <!-- Image Column -->
+            <div class="hidden lg:block">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/hands.png" alt="Review" class="w-full h-auto">
             </div>
-            
-            <?php endif; ?>
 
         </div>
     </div>
@@ -456,3 +655,4 @@ get_header();
 <?php
 get_footer();
 ?>
+```
