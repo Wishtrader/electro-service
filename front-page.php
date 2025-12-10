@@ -652,6 +652,125 @@ get_header();
     </div>
 </section>
 
+<!-- FAQ Section -->
+<section class="py-[80px] lg:py-[100px] bg-[#F7F8F9]">
+    <div class="max-w-[1200px] mx-auto px-[15px]">
+        
+        <!-- Header -->
+        <div class="text-center mb-[50px]">
+            <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[15px]">Часто задаваемые вопросы</h2>
+            <p class="text-[#6D6F73] text-[16px] lg:text-[18px] font-[300] mx-auto">Ответы на популярные вопросы</p>
+        </div>
+
+        <!-- FAQ Container with Background -->
+        <div class="relative bg-[url('<?php echo get_template_directory_uri(); ?>/assets/faq-bg.png')] bg-cover rounded-[30px] p-[30px] lg:p-[50px] overflow-hidden">
+            
+            <!-- Background Image -->
+            <div class="absolute inset-0 opacity-10 pointer-events-none">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/faq-bg.png" alt="" class="w-full h-full object-cover">
+            </div>
+
+            <!-- FAQ Items -->
+            <div class="relative z-10 space-y-[15px] max-w-[800px] mx-auto">
+                
+                <!-- FAQ Item 1 -->
+                <div class="faq-item border-b border-[#E5E5E5] pb-[15px]">
+                    <button class="faq-question w-full flex justify-between items-center text-left py-[15px] text-[#2A2A2A] text-[16px] lg:text-[18px] font-[500] hover:text-[#3D8BFF] transition-colors">
+                        <span>Какие документы вы предоставляете после измерений?</span>
+                        <svg class="faq-icon w-[24px] h-[24px] flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden overflow-hidden">
+                        <div class="pt-[10px] pb-[15px] text-[#555] text-[15px] leading-[1.6]">
+                            После проведения измерений мы предоставляем полный пакет документов: протоколы измерений, технический отчет, рекомендации по устранению выявленных недостатков. Все документы имеют необходимые печати и подписи аккредитованной лаборатории.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item border-b border-[#E5E5E5] pb-[15px]">
+                    <button class="faq-question w-full flex justify-between items-center text-left py-[15px] text-[#2A2A2A] text-[16px] lg:text-[18px] font-[500] hover:text-[#3D8BFF] transition-colors">
+                        <span>Как быстро вы можете приехать на объект?</span>
+                        <svg class="faq-icon w-[24px] h-[24px] flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden overflow-hidden">
+                        <div class="pt-[10px] pb-[15px] text-[#555] text-[15px] leading-[1.6]">
+                            Мы стараемся выехать на объект в течение 1-2 рабочих дней после получения заявки. В срочных случаях возможен выезд в день обращения. Точное время согласовывается с вами индивидуально.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item border-b border-[#E5E5E5] pb-[15px]">
+                    <button class="faq-question w-full flex justify-between items-center text-left py-[15px] text-[#2A2A2A] text-[16px] lg:text-[18px] font-[500] hover:text-[#3D8BFF] transition-colors">
+                        <span>Работаете ли вы с юридическими лицами?</span>
+                        <svg class="faq-icon w-[24px] h-[24px] flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden overflow-hidden">
+                        <div class="pt-[10px] pb-[15px] text-[#555] text-[15px] leading-[1.6]">
+                            Да, мы работаем как с физическими, так и с юридическими лицами. Предоставляем все необходимые документы для бухгалтерии: договор, акты выполненных работ, счета-фактуры. Возможна оплата по безналичному расчету с НДС.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-question w-full flex justify-between items-center text-left py-[15px] text-[#2A2A2A] text-[16px] lg:text-[18px] font-[500] hover:text-[#3D8BFF] transition-colors">
+                        <span>Какая гарантия на выполненные работы?</span>
+                        <svg class="faq-icon w-[24px] h-[24px] flex-shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer hidden overflow-hidden">
+                        <div class="pt-[10px] pb-[15px] text-[#555] text-[15px] leading-[1.6]">
+                            На все выполненные работы мы предоставляем гарантию 2 года. Гарантия распространяется на качество монтажа и установленное оборудование. В случае возникновения проблем в гарантийный период, мы бесплатно устраним все недостатки.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                const answer = item.querySelector('.faq-answer');
+                const icon = item.querySelector('.faq-icon');
+                
+                question.addEventListener('click', () => {
+                    const isOpen = !answer.classList.contains('hidden');
+                    
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.querySelector('.faq-answer').classList.add('hidden');
+                            otherItem.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                        }
+                    });
+                    
+                    // Toggle current item
+                    if (isOpen) {
+                        answer.classList.add('hidden');
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        answer.classList.remove('hidden');
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+        });
+    </script>
+</section>
+
 <?php
 get_footer();
 ?>
