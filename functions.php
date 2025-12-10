@@ -176,3 +176,193 @@ if ( defined( 'JETPACK__VERSION' ) ) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
 
+/**
+ * Register Custom Post Type: Projects
+ */
+function electro_service_register_projects_cpt() {
+	$labels = array(
+		'name'                  => 'Проекты',
+		'singular_name'         => 'Проект',
+		'menu_name'             => 'Проекты',
+		'name_admin_bar'        => 'Проект',
+		'add_new'               => 'Добавить новый',
+		'add_new_item'          => 'Добавить новый проект',
+		'new_item'              => 'Новый проект',
+		'edit_item'             => 'Редактировать проект',
+		'view_item'             => 'Просмотреть проект',
+		'all_items'             => 'Все проекты',
+		'search_items'          => 'Искать проекты',
+		'not_found'             => 'Проекты не найдены',
+		'not_found_in_trash'    => 'В корзине проектов не найдено'
+	);
+
+	$args = array(
+		'labels'                => $labels,
+		'public'                => true,
+		'publicly_queryable'    => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'query_var'             => true,
+		'rewrite'               => array( 'slug' => 'projects' ),
+		'capability_type'       => 'post',
+		'has_archive'           => true,
+		'hierarchical'          => false,
+		'menu_position'         => 5,
+		'menu_icon'             => 'dashicons-portfolio',
+		'supports'              => array( 'title', 'thumbnail' ),
+		'show_in_rest'          => true,
+	);
+
+	register_post_type( 'project', $args );
+}
+add_action( 'init', 'electro_service_register_projects_cpt' );
+
+/**
+ * Register ACF Fields for Projects
+ */
+if( function_exists('acf_add_local_field_group') ):
+
+acf_add_local_field_group(array(
+	'key' => 'group_projects',
+	'title' => 'Информация о проекте',
+	'fields' => array(
+		array(
+			'key' => 'field_project_name',
+			'label' => 'Название проекта',
+			'name' => 'project_name',
+			'type' => 'text',
+			'instructions' => 'Введите название проекта',
+			'required' => 1,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_address',
+			'label' => 'Адрес',
+			'name' => 'project_address',
+			'type' => 'text',
+			'instructions' => 'Введите адрес объекта',
+			'required' => 1,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_year',
+			'label' => 'Год',
+			'name' => 'project_year',
+			'type' => 'number',
+			'instructions' => 'Введите год выполнения проекта',
+			'required' => 1,
+			'min' => 2000,
+			'max' => 2100,
+			'wrapper' => array(
+				'width' => '25',
+			),
+		),
+		array(
+			'key' => 'field_project_category',
+			'label' => 'Категория',
+			'name' => 'project_category',
+			'type' => 'text',
+			'instructions' => 'Введите категорию проекта',
+			'required' => 0,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_work_type',
+			'label' => 'Вид работ',
+			'name' => 'project_work_type',
+			'type' => 'text',
+			'instructions' => 'Введите вид выполненных работ',
+			'required' => 0,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_description',
+			'label' => 'Описание проекта',
+			'name' => 'project_description',
+			'type' => 'textarea',
+			'instructions' => 'Введите описание проекта',
+			'required' => 1,
+			'rows' => 4,
+		),
+		array(
+			'key' => 'field_project_image_1',
+			'label' => 'Изображение 1',
+			'name' => 'project_image_1',
+			'type' => 'image',
+			'instructions' => 'Загрузите первое изображение проекта',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'medium',
+			'library' => 'all',
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_image_2',
+			'label' => 'Изображение 2',
+			'name' => 'project_image_2',
+			'type' => 'image',
+			'instructions' => 'Загрузите второе изображение проекта',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'medium',
+			'library' => 'all',
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_image_3',
+			'label' => 'Изображение 3',
+			'name' => 'project_image_3',
+			'type' => 'image',
+			'instructions' => 'Загрузите третье изображение проекта',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'medium',
+			'library' => 'all',
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_project_image_4',
+			'label' => 'Изображение 4',
+			'name' => 'project_image_4',
+			'type' => 'image',
+			'instructions' => 'Загрузите четвертое изображение проекта',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'medium',
+			'library' => 'all',
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'project',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+));
+
+endif;
