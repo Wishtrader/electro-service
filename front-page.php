@@ -771,6 +771,135 @@ get_header();
     </script>
 </section>
 
+<!-- CTA Section -->
+<section class="py-[80px] lg:py-[100px] bg-[#F7F8F9]">
+    <div class="max-w-[1200px] mx-auto px-[15px]">
+        
+        <!-- Header -->
+        <div class="text-center mb-[50px]">
+            <h2 class="text-[#2A2A2A] text-[32px] lg:text-[48px] font-[700] mb-[15px]">Готовы начать работу?</h2>
+            <p class="text-[#6D6F73] text-[16px] lg:text-[18px] max-w-[685px] text-center mx-auto font-[300]">
+                Оставьте заявку, и наш специалист свяжется с вами в течение 15 минут для консультации и согласования времени выезда.
+            </p>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-[40px] lg:gap-[60px] items-center">
+            
+            <!-- Features Column -->
+            <div class="space-y-[30px]">
+                
+                <!-- Feature 1 -->
+                <div class="flex items-start gap-[20px]">
+                    <div class="flex-shrink-0 w-[81px] h-[81px] bg-[#3D8BFF] rounded-full flex items-center justify-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/k1.svg" alt="" class="w-[81px] h-[81px]">
+                    </div>
+                    <div>
+                        <h3 class="text-[#2A2A2A] text-[18px] lg:text-[18px] font-[400] mb-[8px]">Бесплатный выезд</h3>
+                        <p class="text-[#555] text-[15px] font-[300] leading-[1.5]">Консультация и оценка без платы</p>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="flex items-start gap-[20px]">
+                    <div class="flex-shrink-0 w-[81px] h-[81px] bg-[#3D8BFF] rounded-full flex items-center justify-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/k2.svg" alt="" class="w-[81px] h-[81px]">
+                    </div>
+                    <div>
+                        <h3 class="text-[#2A2A2A] text-[18px] lg:text-[18px] font-[400] mb-[8px]">Быстрые сроки</h3>
+                        <p class="text-[#555] text-[15px] font-[300] leading-[1.5]">Протоколы на следующий день</p>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="flex items-start gap-[20px]">
+                    <div class="flex-shrink-0 w-[81px] h-[81px] bg-[#3D8BFF] rounded-full flex items-center justify-center">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/k3.png" alt="" class="w-[81px] h-[81px]">
+                    </div>
+                    <div>
+                        <h3 class="text-[#2A2A2A] text-[18px] lg:text-[18px] font-[400] mb-[8px]">Гарантия качества</h3>
+                        <p class="text-[#555] text-[15px] font-[300] leading-[1.5]">2 года на все работы</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Form Column -->
+            <div class="p-[30px] lg:p-[40px]">
+                <form id="cta-form" class="space-y-[20px]">
+                    
+                    <!-- Name Input -->
+                    <div>
+                        <label for="cta-name" class="block text-[#6D6F73] text-[15px] font-[300] mb-[8px]">Ваше имя*</label>
+                        <input 
+                            type="text" 
+                            id="cta-name" 
+                            name="name" 
+                            required
+                            class="w-full bg-[#F4F3F1] px-[20px] py-[14px] border-0 rounded-[18px] text-[#2A2A2A] text-[16px] focus:outline-none focus:ring-2 focus:ring-[#3D8BFF]"
+                        >
+                    </div>
+
+                    <!-- Phone Input -->
+                    <div>
+                        <label for="cta-phone" class="block text-[#6D6F73] text-[15px] font-[300] mb-[8px]">Телефон*</label>
+                        <input 
+                            type="tel" 
+                            id="cta-phone" 
+                            name="phone" 
+                            required
+                            class="w-full bg-[#F4F3F1] px-[20px] py-[14px] border-0 rounded-[18px] text-[#2A2A2A] text-[16px] focus:outline-none focus:ring-2 focus:ring-[#3D8BFF]"
+                        >
+                    </div>
+
+                    <!-- Service Input -->
+                    <div>
+                        <label for="cta-service" class="block text-[#6D6F73] text-[15px] font-[300] mb-[8px]">Интересующая услуга</label>
+                        <select 
+                            id="cta-service" 
+                            name="service"
+                            class="w-full bg-[#F4F3F1] px-[20px] py-[14px] border-0 rounded-[8px] text-[#6D6F73] text-[15px] focus:outline-none focus:ring-2 focus:ring-[#3D8BFF] appearance-none cursor-pointer"
+                            style="background-image: url('data:image/svg+xml;charset=UTF-8,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27currentColor%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3e%3cpolyline points=%276 9 12 15 18 9%27%3e%3c/polyline%3e%3c/svg%3e'); background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.5em 1.5em;"
+                        >
+                            <option value="">Выберите услугу</option>
+                            <option value="efi">Электрофизические измерения</option>
+                            <option value="grounding">Измерения сопротивления заземления</option>
+                            <option value="isolation">Измерения сопротивления изоляции</option>
+                            <option value="design">Проектирование электроснабжения</option>
+                            <option value="montage">Монтаж со сдачей энергонадзору</option>
+                            <option value="topo">Топосъемка и архитектурные проекты</option>
+                        </select>
+                    </div>
+
+                    <!-- Privacy Checkbox -->
+                    <div class="flex items-start gap-[10px]">
+                        <input 
+                            type="checkbox" 
+                            id="cta-privacy" 
+                            name="privacy" 
+                            required
+                            class="w-[18px] h-[18px] rounded border-2 border-[#3D8BFF] text-[#3D8BFF] focus:ring-0 focus:ring-offset-0 cursor-pointer"
+                        >
+                        <label for="cta-privacy" class="text-[#2A2A2A] text-[14px] cursor-pointer">
+                            Я согласен на обработку персональных данных
+                        </label>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button 
+                        type="submit"
+                        class="w-full bg-[#233B5D] hover:bg-[#3D8BFF] text-white text-[16px] font-[600] py-[16px] px-[32px] rounded-[8px] transition-colors duration-300"
+                    >
+                        Отправить заявку
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <?php
 get_footer();
 ?>
