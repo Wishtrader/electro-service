@@ -167,7 +167,7 @@
 				</nav><!-- #site-navigation -->
 				
 				<div class="ml-[20px]">
-					<a href="#contact" class="bg-[#243B55] text-white hover:text-[#243B55] px-[25px] py-[12px] rounded-[4px] no-underline font-[600] text-[16px] inline-block transition hover:bg-[#3D8BFF] border-none leading-[1.2]">Бесплатный выезд специалиста</a>
+					<button id="open-contact-modal" class="bg-[#243B55] text-white hover:text-white px-[25px] py-[12px] rounded-[4px] no-underline font-[600] text-[16px] inline-block transition hover:bg-[#3D8BFF] border-none leading-[1.2] cursor-pointer">Бесплатный выезд специалиста</button>
 				</div>
 			</div>
 		</div>
