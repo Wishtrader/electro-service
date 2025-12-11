@@ -511,3 +511,97 @@ acf_add_local_field_group(array(
 ));
 
 endif;
+
+// Register Reviews Custom Post Type
+function electro_service_register_reviews_cpt() {
+	$labels = array(
+		'name'                  => 'Отзывы',
+		'singular_name'         => 'Отзыв',
+		'menu_name'             => 'Отзывы',
+		'name_admin_bar'        => 'Отзыв',
+		'add_new'               => 'Добавить новый',
+		'add_new_item'          => 'Добавить новый отзыв',
+		'new_item'              => 'Новый отзыв',
+		'edit_item'             => 'Редактировать отзыв',
+		'view_item'             => 'Просмотреть отзыв',
+		'all_items'             => 'Все отзывы',
+		'search_items'          => 'Искать отзывы',
+		'not_found'             => 'Отзывы не найдены',
+		'not_found_in_trash'    => 'В корзине отзывов не найдено'
+	);
+
+	$args = array(
+		'labels'                => $labels,
+		'public'                => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'query_var'             => true,
+		'rewrite'               => array( 'slug' => 'reviews' ),
+		'capability_type'       => 'post',
+		'has_archive'           => true,
+		'hierarchical'          => false,
+		'menu_position'         => 7,
+		'menu_icon'             => 'dashicons-star-filled',
+		'supports'              => array( 'title' ),
+		'show_in_rest'          => true,
+	);
+
+	register_post_type( 'review', $args );
+}
+add_action( 'init', 'electro_service_register_reviews_cpt' );
+
+// Register ACF Fields for Reviews
+if( function_exists('acf_add_local_field_group') ):
+
+acf_add_local_field_group(array(
+	'key' => 'group_reviews',
+	'title' => 'Информация об отзыве',
+	'fields' => array(
+		array(
+			'key' => 'field_review_photo',
+			'label' => 'Фото клиента',
+			'name' => 'review_photo',
+			'type' => 'image',
+			'instructions' => 'Загрузите фотографию клиента',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'thumbnail',
+			'library' => 'all',
+			'mime_types' => 'jpg,jpeg,png',
+		),
+		array(
+			'key' => 'field_review_client',
+			'label' => 'Клиент',
+			'name' => 'review_client',
+			'type' => 'text',
+			'instructions' => 'Введите имя клиента',
+			'required' => 1,
+			'placeholder' => 'Иван Иванов',
+		),
+		array(
+			'key' => 'field_review_text',
+			'label' => 'Текст отзыва',
+			'name' => 'review_text',
+			'type' => 'textarea',
+			'instructions' => 'Введите текст отзыва',
+			'required' => 1,
+			'rows' => 6,
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'review',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+));
+
+endif;

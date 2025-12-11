@@ -17,9 +17,9 @@
 				
 				<!-- Column 1: Info -->
 				<div class="w-full lg:w-[280px]">
-					<div class="flex md:flex-col lg:flex-row items-center gap-[25px]">
-						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block mb-[25px]">
-							<img src="<?php echo get_template_directory_uri(); ?>/assets/logo-white.svg" alt="<?php bloginfo( 'name' ); ?>" class="w-[133px] lg:h-[84px] w-auto">
+					<div class="flex flex-col items-center gap-[25px]">
+						<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="block">
+							<img src="<?php echo get_template_directory_uri(); ?>/assets/logo-white.svg" alt="<?php bloginfo( 'name' ); ?>" class="w-[203px] lg:h-[84px] w-auto">
 						</a>
 						<p class="text-[15px] text-center md:text-left leading-[1.4] text-[#FFFFFF] mb-[30px] font-[300]">
 							Электрофизические измерения<br>
