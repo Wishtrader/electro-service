@@ -605,3 +605,80 @@ acf_add_local_field_group(array(
 ));
 
 endif;
+
+// Register Projects CPT
+function electro_service_projects_init() {
+	$labels = array(
+		'name' => 'Projects',
+		'singular_name' => 'Project',
+		'menu_name' => 'Projects',
+		'add_new' => 'Add New',
+		'add_new_item' => 'Add New Project',
+		'edit_item' => 'Edit Project',
+		'new_item' => 'New Project',
+		'view_item' => 'View Project',
+		'all_items' => 'All Projects',
+		'search_items' => 'Search Projects',
+		'not_found' => 'No projects found',
+	);
+	
+	$args = array(
+		'labels' => $labels,
+		'public' => true,
+		'has_archive' => true,
+		'menu_icon' => 'dashicons-portfolio',
+		'menu_position' => 8,
+		'supports' => array('title', 'thumbnail'),
+		'rewrite' => array('slug' => 'projects'),
+		'show_in_rest' => true,
+	);
+	
+	register_post_type('project', $args);
+}
+add_action('init', 'electro_service_projects_init');
+
+// ACF Fields for Projects
+if(function_exists('acf_add_local_field_group')):
+
+acf_add_local_field_group(array(
+	'key' => 'group_project_fields',
+	'title' => 'Project Information',
+	'fields' => array(
+		array(
+			'key' => 'field_proj_image',
+			'label' => 'Project Image',
+			'name' => 'project_image',
+			'type' => 'image',
+			'required' => 1,
+			'return_format' => 'array',
+		),
+		array(
+			'key' => 'field_proj_location',
+			'label' => 'Location',
+			'name' => 'project_location',
+			'type' => 'text',
+			'required' => 1,
+		),
+		array(
+			'key' => 'field_proj_year',
+			'label' => 'Year',
+			'name' => 'project_year',
+			'type' => 'number',
+			'required' => 1,
+			'default_value' => 2025,
+			'min' => 2000,
+			'max' => 2100,
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'project',
+			),
+		),
+	),
+));
+
+endif;
