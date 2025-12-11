@@ -147,7 +147,7 @@
 					<!-- Static Menu for Design Match -->
 					<ul class="flex gap-[30px] list-none m-0 p-0">
 						<li><a href="/" class="block py-[22px] no-underline <?php echo is_front_page() ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">Главная</a></li>
-						<li><a href="/services" class="block py-[22px] no-underline <?php echo is_page('services') ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">Услуги</a></li>
+						<li><a href="/services" class="block py-[22px] no-underline <?php echo (is_page('services') || is_post_type_archive('service') || is_singular('service')) ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">Услуги</a></li>
 						<li><a href="/about" class="block py-[22px] no-underline <?php echo is_page('about') ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">О компании</a></li>
 						<li><a href="/portfolio" class="block py-[22px] no-underline <?php echo (is_page('portfolio') || is_post_type_archive('portfolio') || is_singular('portfolio')) ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">Наши работы</a></li>
 						<li><a href="/contacts" class="block py-[22px] no-underline <?php echo is_page('contacts') ? 'text-[#3D8BFF]' : 'text-[#2A2A2A]'; ?> font-[300] text-[18px] transition-colors duration-300 hover:text-[#3D8BFF]">Контакты</a></li>

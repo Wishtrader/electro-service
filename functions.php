@@ -366,3 +366,148 @@ acf_add_local_field_group(array(
 ));
 
 endif;
+
+/**
+ * Register Custom Post Type: Services
+ */
+function electro_service_register_services_cpt() {
+	$labels = array(
+		'name'                  => 'Услуги',
+		'singular_name'         => 'Услуга',
+		'menu_name'             => 'Услуги',
+		'name_admin_bar'        => 'Услуга',
+		'add_new'               => 'Добавить новую',
+		'add_new_item'          => 'Добавить новую услугу',
+		'new_item'              => 'Новая услуга',
+		'edit_item'             => 'Редактировать услугу',
+		'view_item'             => 'Просмотреть услугу',
+		'all_items'             => 'Все услуги',
+		'search_items'          => 'Искать услуги',
+		'not_found'             => 'Услуги не найдены',
+		'not_found_in_trash'    => 'В корзине услуг не найдено'
+	);
+
+	$args = array(
+		'labels'                => $labels,
+		'public'                => true,
+		'publicly_queryable'    => true,
+		'show_ui'               => true,
+		'show_in_menu'          => true,
+		'query_var'             => true,
+		'rewrite'               => array( 'slug' => 'services' ),
+		'capability_type'       => 'post',
+		'has_archive'           => true,
+		'hierarchical'          => false,
+		'menu_position'         => 6,
+		'menu_icon'             => 'dashicons-admin-tools',
+		'supports'              => array( 'title', 'thumbnail' ),
+		'show_in_rest'          => true,
+	);
+
+	register_post_type( 'service', $args );
+}
+add_action( 'init', 'electro_service_register_services_cpt' );
+
+/**
+ * Register ACF Fields for Services
+ */
+if( function_exists('acf_add_local_field_group') ):
+
+acf_add_local_field_group(array(
+	'key' => 'group_services',
+	'title' => 'Информация об услуге',
+	'fields' => array(
+		array(
+			'key' => 'field_service_icon',
+			'label' => 'Иконка услуги',
+			'name' => 'service_icon',
+			'type' => 'image',
+			'instructions' => 'Загрузите иконку для услуги',
+			'required' => 0,
+			'return_format' => 'array',
+			'preview_size' => 'thumbnail',
+			'library' => 'all',
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_service_name',
+			'label' => 'Название услуги',
+			'name' => 'service_name',
+			'type' => 'text',
+			'instructions' => 'Введите название услуги',
+			'required' => 1,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_service_description',
+			'label' => 'Описание услуги',
+			'name' => 'service_description',
+			'type' => 'textarea',
+			'instructions' => 'Введите описание услуги',
+			'required' => 1,
+			'rows' => 4,
+		),
+		array(
+			'key' => 'field_service_price',
+			'label' => 'Стоимость',
+			'name' => 'service_price',
+			'type' => 'text',
+			'instructions' => 'Введите стоимость услуги (например: "от 5000 руб.")',
+			'required' => 0,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_service_timeline',
+			'label' => 'Сроки',
+			'name' => 'service_timeline',
+			'type' => 'text',
+			'instructions' => 'Введите сроки выполнения (например: "1-2 дня")',
+			'required' => 0,
+			'wrapper' => array(
+				'width' => '50',
+			),
+		),
+		array(
+			'key' => 'field_service_included',
+			'label' => 'Что входит в услугу',
+			'name' => 'service_included',
+			'type' => 'textarea',
+			'instructions' => 'Введите список услуг (каждый пункт с новой строки)',
+			'required' => 0,
+			'rows' => 6,
+		),
+		array(
+			'key' => 'field_service_faq',
+			'label' => 'Часто задаваемые вопросы',
+			'name' => 'service_faq',
+			'type' => 'wysiwyg',
+			'instructions' => 'Добавьте вопросы и ответы. Формат: <strong>Вопрос:</strong> текст вопроса<br><strong>Ответ:</strong> текст ответа',
+			'required' => 0,
+			'tabs' => 'all',
+			'toolbar' => 'basic',
+			'media_upload' => 0,
+		),
+	),
+	'location' => array(
+		array(
+			array(
+				'param' => 'post_type',
+				'operator' => '==',
+				'value' => 'service',
+			),
+		),
+	),
+	'menu_order' => 0,
+	'position' => 'normal',
+	'style' => 'default',
+	'label_placement' => 'top',
+	'instruction_placement' => 'label',
+));
+
+endif;
