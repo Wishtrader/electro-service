@@ -669,6 +669,14 @@ acf_add_local_field_group(array(
 			'min' => 2000,
 			'max' => 2100,
 		),
+		array(
+			'key' => 'field_proj_description',
+			'label' => 'Description',
+			'name' => 'project_description',
+			'type' => 'textarea',
+			'required' => 0,
+			'rows' => 8,
+		),
 	),
 	'location' => array(
 		array(

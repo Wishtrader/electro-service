@@ -17,7 +17,7 @@ get_header();
             <nav class="text-white text-[14px] lg:text-[16px] font-[300]">
                 <a href="<?php echo home_url(); ?>" class="hover:text-[#3D8BFF] transition-colors">Главная</a>
                 <span class="mx-[8px]">/</span>
-                <span class="text-[#2D3542]">Наши работы</span>
+                <span class="text-[#2D3542] ">Наши работы</span>
             </nav>
         </div>
 
@@ -64,15 +64,24 @@ get_header();
                 $project_image = get_field('project_image');
                 $project_location = get_field('project_location');
                 $project_year = get_field('project_year');
+                $project_description = get_field('project_description');
                 $project_title = get_the_title();
                 
                 // Fallbacks
                 if (!$project_location) $project_location = 'Местоположение не указано';
                 if (!$project_year) $project_year = date('Y');
+                if (!$project_description) $project_description = 'Описание проекта не указано';
+                
+                $image_url = $project_image ? esc_url($project_image['url']) : '';
             ?>
             
             <!-- Project Card -->
-            <div class="bg-white rounded-[16px] overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
+            <div class="bg-white rounded-[16px] overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer project-card" 
+                 data-title="<?php echo esc_attr($project_title); ?>"
+                 data-location="<?php echo esc_attr($project_location); ?>"
+                 data-year="<?php echo esc_attr($project_year); ?>"
+                 data-description="<?php echo esc_attr($project_description); ?>"
+                 data-image="<?php echo $image_url; ?>">
                 
                 <!-- Project Image -->
                 <div class="relative h-[220px] bg-[#F7F8F9] overflow-hidden">
@@ -252,6 +261,156 @@ get_header();
         </div>
     </div>
 </section>
+
+<!-- Project Modal -->
+<div id="project-modal" class="fixed inset-0 bg-black bg-opacity-75 z-[100] hidden flex items-center justify-center p-[15px]">
+    <div class="bg-white rounded-[16px] w-full max-w-[900px] max-h-[90vh] overflow-y-auto relative">
+        
+        <!-- Close Button -->
+        <button id="close-project-modal" class="absolute top-[15px] right-[15px] w-[50px] h-[50px] bg-white rounded-full border-2 border-[#2A2A2A] flex items-center justify-center hover:bg-[#F7F8F9] transition-colors z-10">
+            <svg class="w-[24px] h-[24px] text-[#2A2A2A]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+
+        <!-- Modal Content -->
+        <div>
+            <!-- Project Image with Navigation -->
+            <div class="relative h-[300px] lg:h-[400px] bg-[#F7F8F9]">
+                <img id="modal-image" src="" alt="" class="w-full h-full object-cover">
+                
+                <!-- Navigation Arrows -->
+                <button id="prev-project" class="absolute left-[15px] bottom-[15px] w-[50px] h-[50px] bg-white hover:bg-[#3D8BFF] rounded-[8px] flex items-center justify-center transition-colors group">
+                    <svg class="w-[24px] h-[24px] text-[#2A2A2A] group-hover:text-white"  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                    </svg>
+                </button>
+                <button id="next-project" class="absolute right-[15px] bottom-[15px] w-[50px] h-[50px] bg-white hover:bg-[#3D8BFF] rounded-[8px] flex items-center justify-center transition-colors group">
+                    <svg class="w-[24px] h-[24px] text-[#2A2A2A] group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Project Details -->
+            <div class="p-[25px] lg:p-[40px]">
+                
+                <!-- Location -->
+                <div class="flex items-center gap-[8px] mb-[12px]">
+                    <svg class="w-[18px] h-[18px] text-[#3D8BFF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    <span id="modal-location" class="text-[#3D8BFF] text-[15px] font-[500]"></span>
+                </div>
+
+                <!-- Year -->
+                <div class="flex items-center gap-[8px] mb-[20px]">
+                    <svg class="w-[18px] h-[18px] text-[#3D8BFF] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    <span id="modal-year" class="text-[#3D8BFF] text-[15px] font-[500]"></span>
+                </div>
+
+                <!-- Title -->
+                <h2 id="modal-title" class="text-[#2A2A2A] text-[24px] lg:text-[32px] font-[700] mb-[20px] leading-[1.2]"></h2>
+
+                <!-- Description -->
+                <div id="modal-description" class="text-[#555] text-[15px] lg:text-[16px] leading-[1.7] whitespace-pre-line"></div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const modal = document.getElementById('project-modal');
+    const closeBtn = document.getElementById('close-project-modal');
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    const modalImage = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalLocation = document.getElementById('modal-location');
+    const modalYear = document.getElementById('modal-year');
+    const modalDescription = document.getElementById('modal-description');
+    
+    const prevBtn = document.getElementById('prev-project');
+    const nextBtn = document.getElementById('next-project');
+    
+    let currentIndex = 0;
+    let projectsData = [];
+
+    // Collect all projects data
+    projectCards.forEach((card, index) => {
+        projectsData.push({
+            title: card.dataset.title,
+            location: card.dataset.location,
+            year: card.dataset.year,
+            description: card.dataset.description,
+            image: card.dataset.image
+        });
+
+        // Open modal on card click
+        card.addEventListener('click', function() {
+            currentIndex = index;
+            showProject(currentIndex);
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Show specific project
+    function showProject(index) {
+        const project = projectsData[index];
+        modalTitle.textContent = project.title;
+        modalLocation.textContent = project.location;
+        modalYear.textContent = project.year;
+        modalDescription.textContent = project.description;
+        if (project.image) {
+            modalImage.src = project.image;
+            modalImage.alt = project.title;
+        }
+    }
+
+    // Close modal
+    function closeModal() {
+        modal.classList.add('hidden');
+        document.body.style.overflow = 'auto';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close on outside click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+            closeModal();
+        }
+    });
+
+    // Previous project
+    prevBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        currentIndex = (currentIndex - 1 + projectsData.length) % projectsData.length;
+        showProject(currentIndex);
+    });
+
+    // Next project
+    nextBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        currentIndex = (currentIndex + 1) % projectsData.length;
+        showProject(currentIndex);
+    });
+});
+</script>
 
 <?php
 get_footer();
